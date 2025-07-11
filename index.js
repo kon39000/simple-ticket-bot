@@ -21,6 +21,21 @@ console.log('BOT_TOKEN length:', BOT_TOKEN ? BOT_TOKEN.length : 0);
 console.log('SUPPORT_ROLE_ID:', SUPPORT_ROLE_ID);
 console.log('TICKET_CHANNEL_ID:', TICKET_CHANNEL_ID);
 
+// トークンの前後の空白を削除
+const cleanToken = BOT_TOKEN ? BOT_TOKEN.trim() : '';
+console.log('Clean token length:', cleanToken.length);
+
+// トークンの検証
+if (!cleanToken) {
+    console.error('❌ BOT_TOKENが設定されていません！');
+    process.exit(1);
+}
+
+if (cleanToken.length !== 72) {
+    console.error('❌ BOT_TOKENの長さが正しくありません。期待値: 72, 実際: ' + cleanToken.length);
+    console.error('トークンに余分な文字が含まれている可能性があります。');
+}
+
 client.once('ready', async () => {
     console.log(`✅ ${client.user.tag} としてログインしました！`);
     
@@ -190,5 +205,8 @@ client.on('interactionCreate', async interaction => {
 // エラーハンドリング
 client.on('error', console.error);
 
-// Botを起動
-client.login(BOT_TOKEN);
+// Botを起動（クリーンなトークンを使用）
+client.login(cleanToken).catch(error => {
+    console.error('ログインエラー:', error);
+    console.error('トークンの最初の10文字:', cleanToken.substring(0, 10) + '...');
+});
