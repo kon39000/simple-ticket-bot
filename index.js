@@ -14,6 +14,13 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const SUPPORT_ROLE_ID = process.env.SUPPORT_ROLE_ID;
 const TICKET_CHANNEL_ID = process.env.TICKET_CHANNEL_ID;
 
+// デバッグ用ログ
+console.log('環境変数チェック:');
+console.log('BOT_TOKEN exists:', !!BOT_TOKEN);
+console.log('BOT_TOKEN length:', BOT_TOKEN ? BOT_TOKEN.length : 0);
+console.log('SUPPORT_ROLE_ID:', SUPPORT_ROLE_ID);
+console.log('TICKET_CHANNEL_ID:', TICKET_CHANNEL_ID);
+
 client.once('ready', async () => {
     console.log(`✅ ${client.user.tag} としてログインしました！`);
     
